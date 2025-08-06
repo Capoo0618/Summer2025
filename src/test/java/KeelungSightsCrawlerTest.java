@@ -1,5 +1,5 @@
-import bean.Sight;
-import model.KeelungSightsCrawler;
+import demo.bean.Sight;
+import demo.model.KeelungSightsCrawler;
 import java.io.IOException;
 
 public class KeelungSightsCrawlerTest {

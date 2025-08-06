@@ -1,6 +1,6 @@
-package model;
+package demo.model;
 
-import bean.Sight;
+import demo.bean.Sight;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
