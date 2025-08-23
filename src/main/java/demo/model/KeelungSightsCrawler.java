@@ -32,12 +32,12 @@ public class KeelungSightsCrawler {
                 return new Sight[0];
             }
 
-            // 選取所有區域標題 <h4>
+            // 選取所有區域標題
             Elements headings = guideSection.select("h4");
             for (Element heading : headings) {
                 String zoneName = heading.text().trim();
 
-                // 比對區名，例如 "七堵" 包含於 "七堵區"
+                // 比對區名
                 if (!zoneName.contains(zoneFilter)) continue;
 
                 Element ul = heading.nextElementSibling();
@@ -81,7 +81,7 @@ public class KeelungSightsCrawler {
             sight.setZone(zoneName);
 
             Element categoryElement = doc.selectFirst("span[property=rdfs:label] strong");
-            sight.setCategory(categoryElement != null ? categoryElement.text() : "");
+            sight.setCategory(categoryElement != null ? categoryElement.text() : "暫無介紹");
 
             Element photoMeta = doc.selectFirst("meta[itemprop=image]");
             sight.setPhotoURL(photoMeta != null ? photoMeta.attr("content") : "");
