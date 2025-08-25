@@ -28,22 +28,19 @@
   color: #61dafb;
 }
 
-/* 放大名稱、加粗 */
-.sight-name {
-  font-size: 1.25rem; /* 20px */
-  font-weight: 700;
+.collapse-box {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, padding 0.3s ease-out;
 }
 
-/* 每個卡片底部加分隔線 */
-.sight-card {
-  border-bottom: 2px solid #e9ecef; /* 淺灰底線 */
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
+.collapse-box.open {
+  max-height: 500px; /* 可以依照內容長度調整 */
+  padding-top: 10px;
 }
 
-/* 卡片內文行距好讀 */
-.sight-desc {
-  line-height: 1.6;
+.collapse-content {
+  padding: 0 2px;
 }
 
 @keyframes App-logo-spin {
