@@ -1,15 +1,25 @@
 package demo.service;
 
 import demo.bean.Sight;
-import demo.model.KeelungSightsCrawler;
-import java.util.Arrays;
+import org.springframework.stereotype.Service;
+import demo.repository.SightRepository;
+
 import java.util.List;
 
+@Service
 public class SightService {
-    private final KeelungSightsCrawler crawler = new KeelungSightsCrawler();
+
+    private final SightRepository sightRepository;
+
+    public SightService(SightRepository sightRepository) {
+        this.sightRepository = sightRepository;
+    }
 
     public List<Sight> getSightsByZone(String zone) {
-        return Arrays.asList(crawler.getItems(zone));
+        return sightRepository.findByZone(zone);
+    }
+
+    public void saveAll(Iterable<Sight> sights) {
+        sightRepository.saveAll(sights);
     }
 }
-

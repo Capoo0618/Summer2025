@@ -5,16 +5,21 @@ import demo.service.SightService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
-@RequestMapping
+@RequestMapping("/SightAPI")
 public class SightController {
 
-    private final SightService sightService = new SightService();
+    private final SightService sightService;
 
-    @GetMapping("/SightAPI")
+    // 建構子注入 Service
+    public SightController(SightService sightService) {
+        this.sightService = sightService;
+    }
+
+    // 例如：http://localhost:8080/SightAPI?zone=七堵
+    @GetMapping
     public List<Sight> getSights(@RequestParam String zone) {
         return sightService.getSightsByZone(zone);
     }
 }
-
