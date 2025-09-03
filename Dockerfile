@@ -1,14 +1,21 @@
-# 使用官方 OpenJDK 作為基底
-FROM openjdk:17-jdk-slim
-
-# 設定工作目錄
+# === Stage 1: Build with Maven ===
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# 將 Maven 打包好的 jar 複製進容器
-COPY target/Summer2025-1.0-SNAPSHOT.jar app.jar
+# 複製 pom.xml 並下載依賴（快取機制）
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# 設定容器啟動指令
+# 複製專案原始碼並打包
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# === Stage 2: Run with JDK ===
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+# 從上個 stage 拷貝 jar
+COPY --from=build /app/target/Summer2025-1.0-SNAPSHOT.jar app.jar
+
+# 啟動 Spring Boot
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
-# Railway / Render 會自動給 PORT 環境變數
-EXPOSE 8080
