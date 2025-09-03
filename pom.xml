@@ -24,17 +24,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <!-- 強制使用新版 Mongo Driver，避免 Atlas TLS 問題 -->
-            <dependency>
-                <groupId>org.mongodb</groupId>
-                <artifactId>mongodb-driver-sync</artifactId>
-                <version>4.10.2</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <!-- Jsoup 爬蟲 -->
         <dependency>
@@ -43,13 +32,13 @@
             <version>1.21.1</version>
         </dependency>
 
-        <!-- Spring Boot Web -->
+        <!-- Spring Boot Web (REST API) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Spring Boot MongoDB -->
+        <!-- Spring Boot MongoDB (自動帶正確 driver) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -65,5 +54,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
