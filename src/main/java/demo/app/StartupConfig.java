@@ -7,6 +7,8 @@ import demo.repository.SightRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.annotation.PreDestroy;
 import java.util.Arrays;
@@ -25,9 +27,16 @@ public class StartupConfig {
         return args -> {
             KeelungSightsCrawler crawler = new KeelungSightsCrawler();
             String[] zones = {"中山區", "信義區", "仁愛區", "中正區", "安樂區", "七堵區", "暖暖區"};
-
             for (String zone : zones) {
                 Sight[] sights = crawler.getItems(zone);
+                for (Sight sight : sights) {
+                    if (sight.getPhotoURL() == null || sight.getPhotoURL().isBlank()) {
+                        sight.setPhotoURL("/images/no_image.jpg");
+                    }
+                    if (sight.getDescription() == null || sight.getDescription().isBlank()) {
+                        sight.setDescription("暫無詳細描述");
+                    }
+                }
                 if (sights.length > 0) {
                     sightService.saveAll(Arrays.asList(sights));
                     System.out.println("✅ 已將 " + zone + " 景點資料寫入 MongoDB: " + sights.length + " 筆");
